@@ -87,7 +87,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: admin
     volumes:
-      - db-data:/var/lib/mysql
+      - type: bind
+        source: ./data_mounted/db-data
+        target: /var/lib/mysql
 
   frontend:
     image: frappe/erpnext:v14.27.8
@@ -159,7 +161,9 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - redis-queue-data:/data
+      - type: bind
+        source: ./data_mounted/redis-queue-data
+        target: /data
 
   redis-cache:
     image: redis:6.2-alpine
@@ -167,7 +171,9 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - redis-cache-data:/data
+      - type: bind
+        source: ./data_mounted/redis-cache-data
+        target: /data
 
   redis-socketio:
     image: redis:6.2-alpine
@@ -175,7 +181,9 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - redis-socketio-data:/data
+      - type: bind
+        source: ./data_mounted/redis-socketio-data
+        target: /data
 
   scheduler:
     image: frappe/erpnext:v14.27.8
